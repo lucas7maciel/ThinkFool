@@ -1,7 +1,6 @@
 package com.lucas.think_fool.thinker;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +13,11 @@ public class ThinkerService {
     private ThinkerRepo thinkerRepo;
 
     public List<Thinker> findAll() {
+        List<Thinker> thinkers = thinkerRepo.findAll();
 
-        return thinkerRepo.findAll();
+        // + Fazer contador de posts
+
+        return thinkers;
     }
 
     public Thinker createThinker(String username, String fullname) {
