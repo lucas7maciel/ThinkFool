@@ -3,9 +3,8 @@ package com.lucas.think_fool.post;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,8 +20,9 @@ public class PostController {
     private PostService postService;
 
     @GetMapping("")
-    public ResponseEntity<List<Post>> findAll() {
-        return postService.findAll();
+    public ResponseEntity<Page<Post>> findAll(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        return postService.findAll(page, pageSize);
     }
 
     @PostMapping("")

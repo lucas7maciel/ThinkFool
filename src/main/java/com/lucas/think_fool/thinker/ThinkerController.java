@@ -1,8 +1,7 @@
 package com.lucas.think_fool.thinker;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,8 +20,9 @@ public class ThinkerController {
     private ThinkerService thinkerService;
 
     @GetMapping("")
-    public ResponseEntity<List<Thinker>> findAll() {
-        return ResponseEntity.status(HttpStatus.OK).body(thinkerService.findAll());
+    public ResponseEntity<Page<Thinker>> findAll(@RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int pageSize) {
+        return ResponseEntity.status(HttpStatus.OK).body(thinkerService.findAll(page, pageSize));
     }
 
     @PostMapping("")
@@ -34,10 +34,11 @@ public class ThinkerController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateThinker(@PathVariable Long id, @RequestParam String username, @RequestParam String fullname) {
+    public ResponseEntity<String> updateThinker(@PathVariable Long id, @RequestParam String username,
+            @RequestParam String fullname) {
         // + Validar os requests params
         // + Mudar pra responseentity
-        
+
         return thinkerService.updateThinker(id, username, fullname);
     }
 

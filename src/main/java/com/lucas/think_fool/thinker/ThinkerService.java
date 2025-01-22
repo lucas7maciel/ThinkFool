@@ -1,8 +1,9 @@
 package com.lucas.think_fool.thinker;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,9 @@ public class ThinkerService {
     @Autowired
     private ThinkerRepo thinkerRepo;
 
-    public List<Thinker> findAll() {
-        List<Thinker> thinkers = thinkerRepo.findAll();
-
-        // + Fazer contador de posts
+    public Page<Thinker> findAll(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page, pageSize);
+        Page<Thinker> thinkers = thinkerRepo.findAll(pageable);
 
         return thinkers;
     }
