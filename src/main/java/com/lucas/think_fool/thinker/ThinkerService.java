@@ -1,5 +1,7 @@
 package com.lucas.think_fool.thinker;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -20,30 +22,31 @@ public class ThinkerService {
         return thinkers;
     }
 
-    public Thinker createThinker(String username, String fullname) {
-        // + Checar se username ja existe
+    // public Thinker createThinker(String username, String fullname) {
+    // // + Checar se username ja existe
 
-        Thinker newThinker = new Thinker();
+    // Thinker newThinker = new Thinker();
 
-        newThinker.setUsername(username);
-        newThinker.setName(fullname);
+    // newThinker.setUsername(username);
+    // newThinker.setName(fullname);
 
-        return thinkerRepo.save(newThinker);
-    }
+    // return thinkerRepo.save(newThinker);
+    // }
 
     public ResponseEntity<String> updateThinker(Long id, String username, String fullname) {
-        // * Transformar args em dict
+        Optional<Thinker> optionalThinker = thinkerRepo.findById(id);
 
-        if (!thinkerRepo.existsById(id)) {
+        if (!optionalThinker.isPresent()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(String.format("User with id %d does not exist", id));
         }
 
-        Thinker newThinker = new Thinker();
+        Thinker thinker = optionalThinker.get();
 
-        newThinker.setId(id);
-        newThinker.setUsername(username);
-        newThinker.setName(fullname);
+        thinker.setUsername(username);
+        thinker.setName(fullname);
+        
+        thinkerRepo.save(thinker);
 
         return ResponseEntity.ok(String.format("User with id %d successfully updated!", id));
     }

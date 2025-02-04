@@ -16,6 +16,8 @@ import com.lucas.think_fool.dtos.SignInDto;
 import com.lucas.think_fool.dtos.SignUpDto;
 import com.lucas.think_fool.thinker.Thinker;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("auth")
 public class AuthController {
@@ -30,17 +32,18 @@ public class AuthController {
 
     // Fazer validação do DTO e adicionar @Valid
     @PostMapping("/signup")
-    public ResponseEntity<?> signUp(@RequestBody SignUpDto data) throws Exception {
+    public ResponseEntity<?> signUp(@RequestBody @Valid SignUpDto data) throws Exception {
         service.signUp(data);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     // Fazer validação do DTO e adicionar @Valid
     @PostMapping("/signin")
-    public ResponseEntity<JwtDto> signIn(@RequestBody SignInDto data) {
-        var usernamePassword = new UsernamePasswordAuthenticationToken(data.login(), data.password());
+    public ResponseEntity<JwtDto> signIn(@RequestBody @Valid SignInDto data) {
+        var usernamePassword = new UsernamePasswordAuthenticationToken(data.username(), data.password());
         var authUser = authenticationManager.authenticate(usernamePassword);
         var accessToken = tokenService.generateAccessToken((Thinker) authUser.getPrincipal());
+
         return ResponseEntity.ok(new JwtDto(accessToken));
     }
 }

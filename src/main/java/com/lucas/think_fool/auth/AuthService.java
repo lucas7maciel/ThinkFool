@@ -23,21 +23,15 @@ public class AuthService implements UserDetailsService {
         return thinker.get();
     }
 
-    // throws InvalidJwtException
+    // Trocar por 'throws InvalidJwtException'
     public Thinker signUp(SignUpDto data) throws Exception {
-        if (!thinkerRepo.findByUsername(data.login()).isEmpty()) {
+        if (!thinkerRepo.findByUsername(data.username()).isEmpty()) {
             throw new Exception("Username already exists");
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(data.password());
         
-        // Mudar isso pra service
-        Thinker newThinker = new Thinker();
-
-        newThinker.setUsername(data.login());
-        newThinker.setName("Nome teste");
-        newThinker.setPassword(encryptedPassword);
-
+        Thinker newThinker = new Thinker(data.username(), "Nome teste", encryptedPassword);
         return thinkerRepo.save(newThinker);
     }
 }

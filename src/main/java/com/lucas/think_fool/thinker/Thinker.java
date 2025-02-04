@@ -19,6 +19,15 @@ import lombok.Data;
 @Data
 @Entity
 public class Thinker implements UserDetails {
+    public Thinker() {
+    }
+
+    public Thinker(String username, String name, String password) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
