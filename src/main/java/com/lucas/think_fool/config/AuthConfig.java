@@ -28,10 +28,18 @@ public class AuthConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.GET, "/thinker").permitAll()
+                        // Auth
                         .requestMatchers(HttpMethod.POST, "/auth/*").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/post").hasRole("ADMIN")
-                        .anyRequest().authenticated())
+                        // Thinker
+                        .requestMatchers(HttpMethod.GET, "/thinker").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/thinker").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.PUT, "/thinker").hasRole("ADMIN")
+                        .requestMatchers(HttpMethod.DELETE, "/thinker").hasRole("ADMIN")
+                        // Post
+                        .requestMatchers(HttpMethod.GET, "/post").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/post").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/post").authenticated()
+                        .requestMatchers(HttpMethod.DELETE, "/post").authenticated())
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
     }

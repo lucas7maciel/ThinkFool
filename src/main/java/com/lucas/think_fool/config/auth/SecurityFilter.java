@@ -34,7 +34,7 @@ public class SecurityFilter extends OncePerRequestFilter {
             String login = tokenService.validateToken(token);
             Optional<Thinker> optionalThinker = thinkerRepo.findByUsername(login);
 
-            if (!optionalThinker.isEmpty()) {
+            if (optionalThinker.isEmpty()) {
                 throw new UsernameNotFoundException(String.format("User %s not found", login));
             }
 
