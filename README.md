@@ -17,9 +17,9 @@ _Once the endpoints are complete this list will be replaced by a more detailed g
 ## Building the Project
 
 1. **Clone the repository:**
-   ```bash
-   git clone [https://github.com/lucas7maciel/ThinkFool.git](https://www.google.com/search?q=https://github.com/lucas7maciel/ThinkFool.git)
-   ```
+```bash
+git clone [https://github.com/lucas7maciel/ThinkFool.git](https://www.google.com/search?q=https://github.com/lucas7maciel/ThinkFool.git)
+```
 
 2. **Navigate to the project directory:**
 ```
